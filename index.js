@@ -11,7 +11,8 @@ const gateways = {
 }
 const {
   sendMessage,
-  receiveMessage
+  receiveMessage,
+  listMessages
 } = require('./use_cases')(gateways);
 
 app.use(cors());
@@ -36,6 +37,11 @@ app.post('/send_sms', async (req, res) => {
 app.post('/receive_sms', async (req, res) => {
   receiveMessage(req.body.from, req.body.message);
   res.status(200).send();
+});
+
+app.get('/sms', async (req, res) => {
+  const messages = await listMessages(req.query.number);
+  res.send(messages);
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
