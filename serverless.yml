@@ -1,0 +1,30 @@
+# add rest api resource
+# add env variables when done
+
+service: hn-collab-casework-api
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-west-2
+  stage: production
+  profile: hackney
+  timeout: 15
+  apiGateway:
+    restApiId: g6bw0g0ojk
+    restApiRootResourceId: kd0jzu # i created this manually as a resource on the existing api gateway
+
+package:
+  exclude:
+    - '**'
+  include:
+    - index.js
+    - gateways/**
+    - node_modules/**
+
+functions:
+  app:
+    role: arn:aws:iam::775052747630:role/LBH_Lambda_Execution
+    handler: index.handler
+    events:
+      - http: 'ANY {proxy+}'
