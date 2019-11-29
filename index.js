@@ -5,12 +5,14 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 const cors = require('cors');
-const ClickSendGateway = require('./gateways/ClickSendGateway');
-const PostgresGateway = require('./gateways/PostgresGateway');
-const sendMessage = require('./use_cases/SendMessage')({
-  smsGateway: ClickSendGateway,
-  dbGateway: PostgresGateway
-});
+const gateways = {
+  smsGateway: require('./gateways/ClickSendGateway'),
+  dbGateway:  require('./gateways/PostgresGateway')
+}
+const {
+  sendMessage,
+  receiveMessage
+} = require('./use_cases')(gateways);
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -32,7 +34,7 @@ app.post('/send_sms', async (req, res) => {
 });
 
 app.post('/receive_sms', async (req, res) => {
-  console.log(req);
+  receiveMessage(req.body.from, req.body.message);
   res.status(200).send();
 });
 
