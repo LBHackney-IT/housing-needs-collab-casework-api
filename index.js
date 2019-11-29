@@ -29,7 +29,7 @@ app.post('/send_sms', async (req, res) => {
   let response = sendMessage(
     req.body.number,
     req.body.message,
-    'user'
+    'user' // This will come from the auth token in the future
   )
   res.send(response);
 });
