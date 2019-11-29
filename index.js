@@ -6,6 +6,11 @@ const app = express();
 const port = 3000;
 const cors = require('cors');
 const ClickSendGateway = require('./gateways/ClickSendGateway');
+const PostgresGateway = require('./gateways/PostgresGateway');
+const sendMessage = require('./use_cases/SendMessage')({
+  smsGateway: ClickSendGateway,
+  dbGateway: PostgresGateway
+});
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -18,11 +23,11 @@ app.use(function(req, res, next) {
 });
 
 app.post('/send_sms', async (req, res) => {
-  const clickSendGateway = new ClickSendGateway();
-  const response = await clickSendGateway.sendMessage(
+  let response = sendMessage(
     req.body.number,
-    req.body.message
-  );
+    req.body.message,
+    'user'
+  )
   res.send(response);
 });
 
