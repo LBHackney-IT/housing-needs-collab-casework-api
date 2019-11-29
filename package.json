@@ -20,6 +20,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http": "0.0.0",
+    "pg-promise": "^10.3.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
     "serverless": "^1.58.0",

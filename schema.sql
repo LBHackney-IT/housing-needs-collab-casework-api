@@ -3,7 +3,7 @@ CREATE TABLE messages (
   number VARCHAR(32) NOT NULL,
   outgoing BOOLEAN,
   message TEXT,
-  userid VARCHAR(128),
+  username VARCHAR(128),
   time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
