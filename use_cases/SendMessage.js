@@ -1,13 +1,10 @@
 function SendMessage(options){
-  const smsGateway = new options.smsGateway()
-  const dbGateway = new options.dbGateway()
+  const smsGateway = new options.smsGateway();
+  const dbGateway = new options.dbGateway();
 
-  return async function(number, message, username){
+  return async function(number, message, username) {
     await dbGateway.saveMessage(number, 'outgoing', message, username);
-    return await smsGateway.sendMessage(
-      number,
-      message
-    );
+    return await smsGateway.sendMessage(number, message);
   }
 }
 

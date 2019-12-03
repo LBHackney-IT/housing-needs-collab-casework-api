@@ -25,23 +25,30 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.post('/send_sms', async (req, res) => {
+app.post('/messages/send', async (req, res) => {
   let response = sendMessage(
     req.body.number,
     req.body.message,
-    'user' // This will come from the auth token in the future
+    'Officer' // This will come from the auth token in the future
   )
   res.send(response);
 });
 
-app.post('/receive_sms', async (req, res) => {
+app.post('/messages/receive', async (req, res) => {
   receiveMessage(req.body.from, req.body.message);
   res.status(200).send();
 });
 
-app.get('/sms', async (req, res) => {
-  const messages = await listMessages(req.query.number);
-  res.send(messages);
+app.get('/messages', async (req, res) => {
+  // Fetch the messages
+  const messages = await listMessages();
+  // Group them by number
+  let grouped = messages.reduce((acc, msg) => {
+    if (!acc[msg.number]) acc[msg.number] = [];
+    acc[msg.number].push(msg);
+    return acc;
+  }, {});
+  res.send(grouped);
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
