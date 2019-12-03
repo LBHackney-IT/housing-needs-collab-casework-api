@@ -7,13 +7,11 @@ const port = 3000;
 const cors = require('cors');
 const gateways = {
   smsGateway: require('./gateways/ClickSendGateway'),
-  dbGateway:  require('./gateways/PostgresGateway')
-}
-const {
-  sendMessage,
-  receiveMessage,
-  listMessages
-} = require('./use_cases')(gateways);
+  dbGateway: require('./gateways/PostgresGateway')
+};
+const { sendMessage, receiveMessage, listMessages } = require('./use-cases')(
+  gateways
+);
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -30,7 +28,7 @@ app.post('/send_sms', async (req, res) => {
     req.body.number,
     req.body.message,
     'user' // This will come from the auth token in the future
-  )
+  );
   res.send(response);
 });
 

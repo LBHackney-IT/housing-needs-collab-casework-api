@@ -1,0 +1,10 @@
+require('dotenv').config();
+module.exports.postfix = () => new Date().getTime().toString();
+module.exports.DB_HOST = () => process.env.DB_HOST;
+module.exports.DB_PORT = () => process.env.DB_PORT;
+module.exports.DB_NAME = () => process.env.DB_NAME;
+module.exports.DB_USER = () => process.env.DB_USER;
+module.exports.DB_PASSWORD = () => process.env.DB_PASSWORD;
+module.exports.CLICKSEND_USERNAME = () => process.env.CLICKSEND_USERNAME;
+module.exports.CLICKSEND_API_KEY = () => process.env.CLICKSEND_API_KEY;
+module.exports.SMS_NUMBER = () => process.env.SMS_NUMBER;

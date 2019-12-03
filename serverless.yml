@@ -1,5 +1,5 @@
-# add rest api resource
-# add env variables when done
+# PREREQUISITES
+# add rest api resource and get restApiRootResourceId
 
 service: hn-collab-casework-api
 
@@ -13,13 +13,41 @@ provider:
   apiGateway:
     restApiId: g6bw0g0ojk
     restApiRootResourceId: kd0jzu # i created this manually as a resource on the existing api gateway
+  vpc:
+    securityGroupIds:
+      - sg-022acccbebd7bca46
+    subnetIds:
+      - subnet-00356e0650138f74f
+      - subnet-0a7f442c22a6feedc
+  environment:
+    CLICKSEND_USERNAME: ${self:custom.CLICKSEND_USERNAME}
+    CLICKSEND_API_KEY: ${self:custom.CLICKSEND_API_KEY}
+    SMS_NUMBER: ${self:custom.SMS_NUMBER}
+    DB_HOST: ${self:custom.DB_HOST}
+    DB_PORT: ${self:custom.DB_PORT}
+    DB_NAME: ${self:custom.DB_NAME}
+    DB_USER: ${self:custom.DB_USER}
+    DB_PASSWORD: ${self:custom.DB_PASSWORD}
+
+custom:
+  DB_HOST: ${file(serverless-vars.js):DB_HOST}
+  DB_PORT: ${file(serverless-vars.js):DB_PORT}
+  DB_INSTANCE_NAME: hncollabcasework-production-db-${file(serverless-vars.js):postfix}
+  DB_NAME: ${file(serverless-vars.js):DB_NAME}
+  DB_USER: ${file(serverless-vars.js):DB_USER}
+  DB_PASSWORD: ${file(serverless-vars.js):DB_PASSWORD}
+  CLICKSEND_USERNAME: ${file(serverless-vars.js):CLICKSEND_USERNAME}
+  CLICKSEND_API_KEY: ${file(serverless-vars.js):CLICKSEND_API_KEY}
+  SMS_NUMBER: ${file(serverless-vars.js):SMS_NUMBER}
 
 package:
   exclude:
     - '**'
   include:
     - index.js
+    - lib/**
     - gateways/**
+    - use-cases/**
     - node_modules/**
 
 functions:
