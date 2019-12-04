@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint --fix --ext js lib && echo 'Lint complete.'",
-    "setup": "tsc --target es5 ./node_modules/clicksend/api.ts"
+    "setup": "tsc --target es5 ./node_modules/clicksend/api.ts",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
