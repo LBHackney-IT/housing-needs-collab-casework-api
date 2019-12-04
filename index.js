@@ -3,8 +3,9 @@ const serverless = require('serverless-http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const gateways = {
   smsGateway: require('./gateways/ClickSendGateway'),
   dbGateway: require('./gateways/PostgresGateway')
@@ -16,7 +17,7 @@ const {
   createContact,
   listContacts,
   getContact
-} = require('./use_cases')(gateways);
+} = require('./use-cases')(gateways);
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -26,6 +27,20 @@ app.use(function(req, res, next) {
   // had to rewrite the path to get it playing nice with a not-root resource in api gateway
   req.url = req.url.replace('/hn-collab-casework', '');
   next();
+});
+
+// Middleware to check for a valid JWT token
+app.use(function(req, res, next) {
+  try{
+    if(req.method !== 'OPTIONS'){
+      let token = req.headers.authorization.replace('Bearer ', '');
+      jwt.verify(token, process.env.JWT_SECRET);
+    }
+    next();
+  }catch(err){
+    console.log("Invalid JWT Token");
+    res.send(403);
+  }
 });
 
 app.post('/contacts', async (req, res) => {

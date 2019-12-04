@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint --fix --ext js lib && echo 'Lint complete.'",
-    "setup": "tsc --target es5 ./node_modules/clicksend/api.ts"
+    "setup": "tsc --target es5 ./node_modules/clicksend/api.ts",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http": "0.0.0",
+    "jsonwebtoken": "^8.5.1",
     "pg-promise": "^10.3.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
@@ -31,6 +33,7 @@
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-prettier": "^3.1.1",
+    "faker": "^4.1.0",
     "jest": "^24.9.0",
     "prettier": "^1.18.2"
   },
