@@ -3,7 +3,7 @@ const serverless = require('serverless-http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const cors = require('cors');
 const gateways = {
   smsGateway: require('./gateways/ClickSendGateway'),
