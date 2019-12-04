@@ -31,14 +31,18 @@ app.use(function(req, res, next) {
 
 // Middleware to check for a valid JWT token
 app.use(function(req, res, next) {
-  try{
-    if(req.method !== 'OPTIONS'){
+  try {
+    if (
+      req.method !== 'OPTIONS' &&
+      process.env.NODE_ENV === 'production' &&
+      process.env.DISABLE_AUTH !== 'true'
+    ) {
       let token = req.headers.authorization.replace('Bearer ', '');
       jwt.verify(token, process.env.JWT_SECRET);
     }
     next();
-  }catch(err){
-    console.log("Invalid JWT Token");
+  } catch (err) {
+    console.log('Invalid JWT Token');
     res.send(403);
   }
 });
