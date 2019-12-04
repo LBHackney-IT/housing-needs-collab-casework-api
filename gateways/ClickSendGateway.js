@@ -22,8 +22,6 @@ class ClickSendGateway {
       console.error(err);
     }
   }
-
-  async receiveMessage(message) {}
 }
 
 module.exports = ClickSendGateway;
