@@ -3,9 +3,18 @@ function SendMessage(options) {
   const dbGateway = new options.dbGateway();
 
   return async function(userId, message, username) {
-    await dbGateway.saveMessage(userId, 'outgoing', message, username);
-    let contact = await dbGateway.getContact(userId);
-    return await smsGateway.sendMessage(contact.number, message);
+    const contact = await dbGateway.getContact(userId);
+    const sentMessage = await smsGateway.sendMessage(
+      contact.number,
+      message,
+      username
+    );
+
+    if (sentMessage) {
+      await dbGateway.saveMessage(userId, 'outgoing', sentMessage, username);
+    }
+
+    return { message: sentMessage };
   };
 }
 

@@ -39,6 +39,7 @@ app.use(function(req, res, next) {
     ) {
       let token = req.headers.authorization.replace('Bearer ', '');
       jwt.verify(token, process.env.JWT_SECRET);
+      res.locals.user = jwt.decode(token).name;
     }
     next();
   } catch (err) {
@@ -80,10 +81,10 @@ app.get('/contacts', async (req, res) => {
 
 app.post('/contacts/:id/messages', async (req, res) => {
   try {
-    let response = sendMessage(
+    let response = await sendMessage(
       req.params.id,
       req.body.message,
-      'Officer' // This will come from the auth token in the future
+      res.locals.user
     );
     res.send(response);
   } catch (err) {
@@ -94,7 +95,7 @@ app.post('/contacts/:id/messages', async (req, res) => {
 
 app.post('/messages', async (req, res) => {
   try {
-    receiveMessage(req.body.from, req.body.message);
+    await receiveMessage(req.body.from, req.body.message);
     res.status(200).send();
   } catch (err) {
     console.log(err);
