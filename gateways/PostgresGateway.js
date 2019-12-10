@@ -71,7 +71,8 @@ class PostgresGateway {
     )
     SELECT users.*, latest_messages.message, latest_messages.time, latest_messages.outgoing
     FROM users
-    LEFT JOIN latest_messages ON latest_messages.user_id = users.id and latest_messages.rn = 1;`;
+    LEFT JOIN latest_messages ON latest_messages.user_id = users.id and latest_messages.rn = 1
+    ORDER BY time DESC;`;
 
     const result = await pg.any(query);
     return result.map(processContact);
