@@ -65,16 +65,25 @@ class PostgresGateway {
     return result;
   }
 
-  async listContacts() {
+  async listContacts(search) {
+    let whereClause = '';
+    let queryParams = {};
+
+    if (search && search.jigsawId) {
+      whereClause = 'WHERE jigsaw_id = $(jigsawId)';
+      queryParams.jigsawId = search.jigsawId;
+    }
+
     const query = `WITH latest_messages AS (
       select *, row_number() over(partition by user_id order by time desc) as rn from messages
     )
     SELECT users.*, latest_messages.message, latest_messages.time, latest_messages.outgoing
     FROM users
     LEFT JOIN latest_messages ON latest_messages.user_id = users.id and latest_messages.rn = 1
+    ${whereClause}
     ORDER BY time DESC;`;
 
-    const result = await pg.any(query);
+    const result = await pg.any(query, queryParams);
     return result.map(processContact);
   }
 

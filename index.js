@@ -75,7 +75,7 @@ app.get('/contacts/:id', async (req, res) => {
 
 app.get('/contacts', async (req, res) => {
   try {
-    let contacts = await listContacts();
+    let contacts = await listContacts(req.query);
     res.send(contacts);
   } catch (err) {
     console.log(err);
