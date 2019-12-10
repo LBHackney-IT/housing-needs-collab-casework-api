@@ -37,7 +37,7 @@ class PostgresGateway {
     const query = `SELECT *
     FROM messages
     WHERE user_id = $(user_id)
-    ORDER BY time DESC`;
+    ORDER BY time ASC`;
 
     const result = await pg.any(query, { user_id });
     return result;
