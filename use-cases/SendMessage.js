@@ -4,17 +4,13 @@ function SendMessage(options) {
 
   return async function(userId, message, username) {
     const contact = await dbGateway.getContact(userId);
-    const sentMessage = await smsGateway.sendMessage(
-      contact.number,
-      message,
-      username
-    );
+    const namedMessage = `${message.trim()}\n- ${username} @ Hackney`;
 
-    if (sentMessage) {
-      await dbGateway.saveMessage(userId, 'outgoing', sentMessage, username);
+    if (await smsGateway.sendMessage(contact.number, namedMessage)) {
+      await dbGateway.saveMessage(userId, 'outgoing', namedMessage, username);
     }
 
-    return { message: sentMessage };
+    return { message: namedMessage };
   };
 }
 

@@ -1,12 +1,12 @@
 var ClickSend = require('../node_modules/clicksend/api');
 
 class ClickSendGateway {
-  async sendMessage(number, message, username) {
+  async sendMessage(number, message) {
     const sms = new ClickSend.SmsMessage();
 
     sms.from = process.env.SMS_NUMBER;
     sms.to = number;
-    sms.body = `${message.trim()}\n- ${username}, Hackney Council`;
+    sms.body = message;
 
     const smsApi = new ClickSend.SMSApi(
       process.env.CLICKSEND_USERNAME,
@@ -18,10 +18,7 @@ class ClickSendGateway {
 
     try {
       const res = await smsApi.smsSendPost(smsCollection);
-      if (res.body.http_code === 200) {
-        return sms.body;
-      }
-      return '';
+      return res.body.http_code === 200;
     } catch (err) {
       console.error(err);
     }
