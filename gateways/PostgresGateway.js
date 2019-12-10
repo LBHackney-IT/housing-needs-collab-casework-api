@@ -10,7 +10,7 @@ const processContact = function(contact) {
   };
   if (contact.time) {
     user.lastMessage = {
-      direction: contact.outgoing ? 'outgoing' : 'incoming',
+      outgoing: contact.outgoing,
       message: contact.message,
       time: contact.time
     };
