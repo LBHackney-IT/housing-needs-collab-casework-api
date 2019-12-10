@@ -51,7 +51,11 @@ app.use(function(req, res, next) {
 app.post('/contacts', async (req, res) => {
   try {
     let result;
-    result = await createContact(req.body.name, req.body.number);
+    result = await createContact(
+      req.body.name,
+      req.body.number,
+      req.body.jigsawId
+    );
     res.redirect(`/contacts/${result.id}`);
   } catch (err) {
     console.log(err);
