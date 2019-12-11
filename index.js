@@ -37,7 +37,7 @@ app.use(function(req, res, next) {
       process.env.NODE_ENV === 'production' &&
       process.env.DISABLE_AUTH !== 'true'
     ) {
-      let token = req.headers.authorization.replace('Bearer ', '');
+      let token = req.query.apikey || req.headers.authorization.replace('Bearer ', '');
       jwt.verify(token, process.env.JWT_SECRET);
       res.locals.user = jwt.decode(token).name;
     }
