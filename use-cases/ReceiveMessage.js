@@ -1,9 +1,19 @@
 function ReceiveMessage(options) {
   const dbGateway = new options.dbGateway();
+  const smsGateway = new options.smsGateway();
 
   return async function(number, message) {
-    let contact = await dbGateway.getContactByNumber(number);
-    return await dbGateway.saveMessage(contact.id, null, 'incoming', message);
+    const contact = await dbGateway.getContactByNumber(number);
+    const user = await dbGateway.getLastUser(number);
+    await dbGateway.saveMessage(contact.id, user.id, 'incoming', message);
+
+    if (user) {
+      await smsGateway.sendNewMessageNotification(
+        contactName,
+        user.username,
+        user.email
+      );
+    }
   };
 }
 

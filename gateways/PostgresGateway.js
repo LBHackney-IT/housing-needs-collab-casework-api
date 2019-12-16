@@ -65,13 +65,20 @@ class PostgresGateway {
     return result;
   }
 
-  async getUser(id) {
-    const query = `SELECT users.*
+  async getLastUser(contactId) {
+    const query = `WITH msgs AS (SELECT messages.* FROM messages
+    WHERE contact_id = $(contactId) AND outgoing = TRUE
+    ORDER BY time DESC
+    LIMIT 1)
+    SELECT users.*
     FROM users
-    WHERE users.id = $(id);`;
+    WHERE id = (SELECT msgs.user_id FROM msgs LIMIT 1);`;
 
-    const result = await pg.one(query, { id });
-    return result;
+    const result = await pg.any(query, { contactId });
+
+    if (result.length > 0) {
+      return result[0];
+    }
   }
 
   async getUserByUsername(username) {

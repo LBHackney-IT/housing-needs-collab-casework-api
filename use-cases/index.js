@@ -5,7 +5,6 @@ function initUseCases(options) {
     listMessages: require('./ListMessages')(options),
     createContact: require('./CreateContact')(options),
     createUser: require('./CreateUser')(options),
-    getUser: require('./GetUser')(options),
     listContacts: require('./ListContacts')(options),
     getContact: require('./GetContact')(options)
   };
