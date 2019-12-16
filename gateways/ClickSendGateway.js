@@ -35,7 +35,7 @@ class ClickSendGateway {
     emailRecipient.email = emailTo;
 
     const emailFrom = new ClickSend.EmailFrom();
-    emailFrom.emailAddressId = 4197;
+    emailFrom.emailAddressId = process.env.EMAIL_ADDRESS_ID;
     emailFrom.name = 'noreply';
 
     const email = new ClickSend.Email();
