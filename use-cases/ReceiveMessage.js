@@ -9,7 +9,7 @@ function ReceiveMessage(options) {
 
     if (user) {
       await smsGateway.sendNewMessageNotification(
-        contactName,
+        contact.name,
         user.username,
         user.email
       );
