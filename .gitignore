@@ -4,4 +4,4 @@
 /.vscode
 /.serverless
 npm-debug.log*
-tmp/*
+/tmp

@@ -2,12 +2,24 @@ function SendMessage(options) {
   const smsGateway = new options.smsGateway();
   const dbGateway = new options.dbGateway();
 
-  return async function(userId, message, username) {
-    const contact = await dbGateway.getContact(userId);
-    const namedMessage = `${message.trim()}\n- ${username} @ Hackney`;
+  return async function(contactId, message, user) {
+    const contact = await dbGateway.getContact(contactId);
+
+    let systemUser = await dbGateway.getUserByUsername(user.username);
+
+    if (!systemUser) {
+      systemUser = await dbGateway.createUser(user.username, user.email);
+    }
+
+    const namedMessage = `${message.trim()}\n- ${user.username} @ Hackney`;
 
     if (await smsGateway.sendMessage(contact.number, namedMessage)) {
-      await dbGateway.saveMessage(userId, 'outgoing', namedMessage, username);
+      await dbGateway.saveMessage(
+        contactId,
+        systemUser.id,
+        'outgoing',
+        namedMessage
+      );
     }
 
     return { message: namedMessage };

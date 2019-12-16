@@ -32,19 +32,22 @@ app.use(function(req, res, next) {
 // Middleware to check for a valid JWT token
 app.use(function(req, res, next) {
   try {
-    if (
-      req.method !== 'OPTIONS' &&
-      process.env.NODE_ENV === 'production' &&
-      process.env.DISABLE_AUTH !== 'true'
-    ) {
-      let token = req.query.apikey || req.headers.authorization.replace('Bearer ', '');
+    if (req.method !== 'OPTIONS') {
+      let token =
+        req.query.apikey || req.headers.authorization.replace('Bearer ', '');
       jwt.verify(token, process.env.JWT_SECRET);
-      res.locals.user = jwt.decode(token).name;
+
+      // pass along the username and email
+      const decoded = jwt.decode(token);
+      res.locals.user = {
+        username: decoded.name,
+        email: decoded.email
+      };
     }
     next();
   } catch (err) {
     console.log('Invalid JWT Token');
-    res.send(403);
+    res.sendStatus(403);
   }
 });
 
@@ -59,7 +62,7 @@ app.post('/contacts', async (req, res) => {
     res.redirect(`/contacts/${result.id}`);
   } catch (err) {
     console.log(err);
-    res.send(500);
+    res.sendStatus(500);
   }
 });
 
@@ -69,7 +72,7 @@ app.get('/contacts/:id', async (req, res) => {
     res.send(contact);
   } catch (err) {
     console.log(err);
-    res.send(500);
+    res.sendStatus(500);
   }
 });
 
@@ -79,7 +82,7 @@ app.get('/contacts', async (req, res) => {
     res.send(contacts);
   } catch (err) {
     console.log(err);
-    res.send(500);
+    res.sendStatus(500);
   }
 });
 
@@ -93,17 +96,18 @@ app.post('/contacts/:id/messages', async (req, res) => {
     res.send(response);
   } catch (err) {
     console.log(err);
-    res.send(500);
+    res.sendStatus(500);
   }
 });
 
 app.post('/messages', async (req, res) => {
   try {
+    console.log(req.body);
     await receiveMessage(req.body.from, req.body.message);
     res.status(200).send();
   } catch (err) {
     console.log(err);
-    res.send(500);
+    res.sendStatus(500);
   }
 });
 
@@ -114,7 +118,7 @@ app.get('/contacts/:id/messages', async (req, res) => {
     res.send(messages);
   } catch (err) {
     console.log(err);
-    res.send(500);
+    res.sendStatus(500);
   }
 });
 

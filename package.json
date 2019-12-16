@@ -12,9 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^12.12.14",
-    "aws-sdk": "^2.580.0",
-    "bluebird": "^3.7.1",
+    "@types/node": "^12.12.17",
+    "aws-sdk": "^2.590.0",
+    "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "clicksend": "^5.0.37",
     "cors": "^2.8.5",
@@ -25,14 +25,14 @@
     "pg-promise": "^10.3.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
-    "serverless": "^1.58.0",
+    "serverless": "^1.59.3",
     "serverless-http": "^2.3.0",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.3"
   },
   "devDependencies": {
-    "eslint": "^6.6.0",
+    "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.5.0",
-    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-prettier": "^3.1.2",
     "faker": "^4.1.0",
     "jest": "^24.9.0",
     "prettier": "^1.18.2"

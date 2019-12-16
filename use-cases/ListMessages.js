@@ -1,8 +1,8 @@
 function ListMessages(options) {
   const dbGateway = new options.dbGateway();
 
-  return async function(userId) {
-    return await dbGateway.getMessages(userId);
+  return async function(contactId) {
+    return await dbGateway.getMessages(contactId);
   };
 }
 
