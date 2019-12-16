@@ -32,14 +32,14 @@ class ClickSendGateway {
 
     const emailRecipient = new ClickSend.EmailRecipient();
     emailRecipient.name = userName;
-    emailRecipient.email = email;
+    emailRecipient.email = emailTo;
 
     const emailFrom = new ClickSend.EmailFrom();
     emailFrom.emailAddressId = 4197;
     emailFrom.name = 'noreply';
 
     const email = new ClickSend.Email();
-    email.to = [emailTo];
+    email.to = [emailRecipient];
     email.from = emailFrom;
     email.subject = 'New SMS received';
     email.body = `<p>Hello,</p><p>You have received a new SMS from ${contactName}. Please visit <a href="${process.env.UI_URL}">${process.env.UI_URL}</a> to check your messages.</p>`;
