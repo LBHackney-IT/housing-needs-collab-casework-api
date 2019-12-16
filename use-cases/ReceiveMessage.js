@@ -4,7 +4,7 @@ function ReceiveMessage(options) {
 
   return async function(number, message) {
     const contact = await dbGateway.getContactByNumber(number);
-    const user = await dbGateway.getLastUser(number);
+    const user = await dbGateway.getLastUser(contact.id);
     await dbGateway.saveMessage(contact.id, user.id, 'incoming', message);
 
     if (user) {
