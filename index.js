@@ -102,7 +102,6 @@ app.post('/contacts/:id/messages', async (req, res) => {
 
 app.post('/messages', async (req, res) => {
   try {
-    console.log(req.body);
     await receiveMessage(req.body.from, req.body.message);
     res.status(200).send();
   } catch (err) {
