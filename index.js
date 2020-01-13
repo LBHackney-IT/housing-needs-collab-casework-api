@@ -43,11 +43,6 @@ app.use(function(req, res, next) {
         username: decoded.name,
         email: decoded.email
       };
-    } else {
-      res.locals.user = {
-        username: 'Local User',
-        email: null
-      };
     }
     next();
   } catch (err) {

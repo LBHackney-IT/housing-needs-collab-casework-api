@@ -32,7 +32,9 @@ function ReceiveMessage(options, useCases) {
 
     // Send an out of hours response to the customer if needed
     if (isWeekend() || isOutOfHours()) {
-      await useCases.sendMessage(contact.id, outOfHoursMessage, 'No Reply');
+      await useCases.sendMessage(contact.id, outOfHoursMessage, {
+        username: 'No Reply'
+      });
     }
   };
 }
