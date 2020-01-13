@@ -9,7 +9,7 @@ const processContact = function(contact) {
     lastMessage: null
   };
   if (contact.time) {
-    contact.lastMessage = {
+    c.lastMessage = {
       outgoing: contact.outgoing,
       message: contact.message,
       time: contact.time
