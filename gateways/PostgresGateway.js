@@ -103,7 +103,7 @@ class PostgresGateway {
     }
 
     const query = `WITH latest_messages AS (
-      select *, row_number() over(partition by contact_id order by time desc) as rn from messages
+      select *, row_number() over(partition by contact_id order by time desc) as rn from messages WHERE username != 'No Reply'
     )
     SELECT contacts.*, latest_messages.message, latest_messages.time, latest_messages.outgoing
     FROM contacts
