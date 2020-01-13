@@ -33,7 +33,6 @@ class PostgresGateway {
   }
 
   async getMessages(contact_id) {
-    // insert into messages table
     const query = `SELECT *
     FROM messages
     WHERE contact_id = $(contact_id)
