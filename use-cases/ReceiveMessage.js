@@ -25,6 +25,7 @@ function ReceiveMessage(options, useCases) {
     if (user) {
       await smsGateway.sendNewMessageNotification(
         contact.name,
+        message,
         user.username,
         user.email
       );

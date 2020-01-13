@@ -24,7 +24,7 @@ class ClickSendGateway {
     }
   }
 
-  async sendNewMessageNotification(contactName, userName, emailTo) {
+  async sendNewMessageNotification(contactName, message, userName, emailTo) {
     const emailApi = new ClickSend.TransactionalEmailApi(
       process.env.CLICKSEND_USERNAME,
       process.env.CLICKSEND_API_KEY
@@ -42,7 +42,12 @@ class ClickSendGateway {
     email.to = [emailRecipient];
     email.from = emailFrom;
     email.subject = 'New SMS received';
-    email.body = `<p>Hello,</p><p>You have received a new SMS from ${contactName}. Please visit <a href="${process.env.UI_URL}">${process.env.UI_URL}</a> to check your messages.</p>`;
+    email.body = `<p>Hello,</p>
+    <p>You have received a new SMS from ${contactName} via the Collaboration Tools prototype:
+    <br>
+    <p>${message}</p>
+    <br>
+    <p>Please visit <a href="${process.env.UI_URL}">${process.env.UI_URL}</a> to check your messages.</p>`;
 
     try {
       const res = await emailApi.emailSendPost(email);
