@@ -1,5 +1,4 @@
 require('dotenv').config();
-const serverless = require('serverless-http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -132,5 +131,3 @@ app.get('/contacts/:id/messages', async (req, res) => {
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
-
-module.exports.handler = serverless(app);
