@@ -100,6 +100,16 @@ app.post('/contacts/:id/messages', async (req, res) => {
   }
 });
 
+app.post('/receive_message', async (req, res) => {
+  try {
+    await receiveMessage(req.body.from, req.body.message);
+    res.status(200).send();
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
+
 app.post('/messages', async (req, res) => {
   try {
     await receiveMessage(req.body.from, req.body.message);
