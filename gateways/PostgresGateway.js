@@ -118,7 +118,7 @@ class PostgresGateway {
     if (!jigsawId) jigsawId = null;
 
     const query = `INSERT INTO contacts (name, number, jigsaw_id)
-    VALUES($(name), $(number), $(jigsawId)) RETURNING id`;
+    VALUES($(name), $(number), $(jigsawId)) RETURNING *`;
 
     const result = await pg.one(query, { name, number, jigsawId });
     return result;
@@ -126,7 +126,7 @@ class PostgresGateway {
 
   async createUser(username, email) {
     const query = `INSERT INTO users (username, email)
-    VALUES($(username), $(email)) RETURNING id`;
+    VALUES($(username), $(email)) RETURNING *`;
 
     const result = await pg.one(query, { username, email });
     return result;

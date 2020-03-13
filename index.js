@@ -15,7 +15,8 @@ const {
   listMessages,
   createContact,
   listContacts,
-  getContact
+  getContact,
+  createUserAndSendMessage
 } = require('./use-cases')(gateways);
 
 app.use(cors());
@@ -111,7 +112,11 @@ app.post('/receive_message', async (req, res) => {
 
 app.post('/messages', async (req, res) => {
   try {
-    await receiveMessage(req.body.from, req.body.message);
+    await createUserAndSendMessage(
+      req.body.number,
+      req.body.name,
+      req.body.message,
+      res.locals.user);
     res.status(200).send();
   } catch (err) {
     console.log(err);

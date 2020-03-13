@@ -7,6 +7,7 @@ function initUseCases(options) {
   useCases.createUser = require('./CreateUser')(options, useCases);
   useCases.listContacts = require('./ListContacts')(options, useCases);
   useCases.getContact = require('./GetContact')(options, useCases);
+  useCases.createUserAndSendMessage = require('./CreateUserAndSendMessage')(options, useCases);
   return useCases;
 }
 
