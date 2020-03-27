@@ -78,7 +78,7 @@ app.get('/contacts/:id', async (req, res) => {
 
 app.get('/contacts', async (req, res) => {
   try {
-    let contacts = await listContacts(req.query);
+    let contacts = await listContacts();
     res.send(contacts);
   } catch (err) {
     console.log(err);
@@ -116,7 +116,8 @@ app.post('/messages', async (req, res) => {
       req.body.number,
       req.body.name,
       req.body.message,
-      res.locals.user);
+      res.locals.user
+    );
     res.status(200).send();
   } catch (err) {
     console.log(err);

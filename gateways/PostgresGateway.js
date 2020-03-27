@@ -12,7 +12,8 @@ const processContact = function(contact) {
     c.lastMessage = {
       outgoing: contact.outgoing,
       message: contact.message,
-      time: contact.time
+      time: contact.time,
+      userEmail: contact.user_email
     };
   }
   return c;
@@ -92,22 +93,16 @@ class PostgresGateway {
     }
   }
 
-  async listContacts(search) {
-    let whereClause = '';
-    let queryParams = {};
+  async listContacts() {
+    const queryParams = {};
 
-    if (search && search.jigsawId) {
-      whereClause = 'WHERE jigsaw_id = $(jigsawId)';
-      queryParams.jigsawId = search.jigsawId;
-    }
-
-    const query = `WITH latest_messages AS (
+    const query = `
+    WITH latest_messages AS (
       select *, row_number() over(partition by contact_id order by time desc) as rn from messages JOIN users ON users.id = messages.user_id WHERE username != 'No Reply'
     )
-    SELECT contacts.*, latest_messages.message, latest_messages.time, latest_messages.outgoing
+    SELECT contacts.*, latest_messages.message, latest_messages.time, latest_messages.outgoing, latest_messages.email AS user_email
     FROM contacts
     LEFT JOIN latest_messages ON latest_messages.contact_id = contacts.id and latest_messages.rn = 1
-    ${whereClause}
     ORDER BY time DESC;`;
 
     const result = await pg.any(query, queryParams);
@@ -117,7 +112,8 @@ class PostgresGateway {
   async createContact(name, number, jigsawId) {
     if (!jigsawId) jigsawId = null;
 
-    const query = `INSERT INTO contacts (name, number, jigsaw_id)
+    const query = `
+    INSERT INTO contacts (name, number, jigsaw_id)
     VALUES($(name), $(number), $(jigsawId)) RETURNING *`;
 
     const result = await pg.one(query, { name, number, jigsawId });
