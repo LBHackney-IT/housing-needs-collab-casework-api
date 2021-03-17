@@ -1,7 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const awsServerlessExpress = require('aws-serverless-express');
 const app = express();
+const server = awsServerlessExpress.createServer(app)
+
+app.get('/test', async (req, res, next) => {
+  res.status(200).send('Hello World!')
+})
 const port = process.env.PORT || 3000;
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
@@ -77,6 +83,7 @@ app.get('/contacts/:id', async (req, res) => {
 });
 
 app.get('/contacts', async (req, res) => {
+  console.log('getting contacts');
   try {
     let contacts = await listContacts();
     res.send(contacts);
@@ -136,4 +143,6 @@ app.get('/contacts/:id/messages', async (req, res) => {
   }
 });
 
-app.listen(port, () => console.log(`App listening on port ${port}!`));
+//app.listen(port, () => console.log(`App listening on port ${port}!`));
+
+module.exports.universal = (event, context) => awsServerlessExpress.proxy(server, event, context);
