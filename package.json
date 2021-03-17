@@ -7,13 +7,15 @@
     "test": "jest",
     "lint": "eslint --fix --ext js lib && echo 'Lint complete.'",
     "setup": "tsc --target es5 ./node_modules/clicksend/api.ts",
-    "start": "node index.js"
+    "start": "nodemon index.js",
+    "deploy": "serverless deploy"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^12.12.17",
     "aws-sdk": "^2.590.0",
+    "aws-serverless-express": "^3.4.0",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "clicksend": "^5.0.37",
@@ -33,7 +35,9 @@
     "eslint-plugin-prettier": "^3.1.2",
     "faker": "^4.1.0",
     "jest": "^24.9.0",
-    "prettier": "^1.18.2"
+    "nodemon": "^2.0.7",
+    "prettier": "^1.18.2",
+    "serverless": "^1.59.3"
   },
   "jest": {
     "testEnvironment": "node"
