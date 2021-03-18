@@ -55,6 +55,7 @@ commands:
       - run:
           name: Deploy lambda
           command: |
+            npm install
             sls deploy --stage <<parameters.stage>> --conceal
 jobs:
   assume-role-development:
