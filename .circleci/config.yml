@@ -55,7 +55,6 @@ commands:
       - run:
           name: Deploy lambda
           command: |
-            cd ./housing-needs-collab-casework-api/
             sls deploy --stage <<parameters.stage>> --conceal
 jobs:
   assume-role-development:
