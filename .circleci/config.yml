@@ -50,7 +50,7 @@ commands:
       - run:
           name: Deploy lambda
           command: |
-            npm install
+            npm install --only=production
             sls deploy --stage <<parameters.stage>> --conceal
 jobs:
   assume-role-development:
