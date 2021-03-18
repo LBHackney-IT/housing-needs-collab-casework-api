@@ -93,7 +93,7 @@ custom:
         - subnet-0d34c8d6fc16a0364
     production:
       securityGroupIds:
-        - sg-060458cddaaa2742a
+        - sg-0e3ca1352f142d8c8
       subnetIds:
         - subnet-01d3657f97a243261
         - subnet-0b7b8fea07efabf34
