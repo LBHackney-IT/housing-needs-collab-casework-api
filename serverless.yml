@@ -13,6 +13,16 @@ functions:
  api:
    handler: index.universal
    role: lambdaExecutionRole
+   environment:
+      CLICKSEND_API_KEY: ${ssm:/housing-collab-api/${self:provider.stage}/clicksend-api-key}
+      CLICKSEND_USERNAME: ${ssm:/housing-collab-api/${self:provider.stage}/clicksend-username}
+      DATABASE_URL: ${ssm:/housing-collab-api/${self:provider.stage}/database-url}
+      EMAIL_ADDRESS_ID: ${ssm:/housing-collab-api/${self:provider.stage}/email-address-id}
+      HEROKU_POSTGRESQL_CRIMSON_URL: ${ssm:/housing-collab-api/${self:provider.stage}/database-url}
+      JWT_SECRET: ${ssm:/housing-collab-api/${self:provider.stage}/jwt-secret}
+      SMS_NUMBER: ${ssm:/housing-collab-api/${self:provider.stage}/sms-number}
+      UI_URL: ${ssm:/housing-collab-api/${self:provider.stage}/ui-url}
+
    events:
      - http:
         path: /
