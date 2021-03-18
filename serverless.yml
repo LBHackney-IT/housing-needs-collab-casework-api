@@ -5,8 +5,8 @@ provider:
  runtime: nodejs12.x
  memorySize: 128
  timeout: 10
- vpc: ${self:custom.vpc.development}
- stage: development
+ vpc: ${self:custom.vpc.${opt:stage}}
+ stage: ${opt:stage}
  region: eu-west-2
 
 functions:
