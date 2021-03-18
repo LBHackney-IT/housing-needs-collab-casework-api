@@ -6,7 +6,7 @@ const app = express();
 const server = awsServerlessExpress.createServer(app)
 
 app.get('/test', async (req, res, next) => {
-  res.status(200).send('Hello World!')
+  res.status(200).send('Success!')
 })
 const port = process.env.PORT || 3000;
 const cors = require('cors');
