@@ -44,11 +44,6 @@ commands:
       - *attach_workspace
       - checkout
       - setup_remote_docker
-      # - run:
-      #     name: Install Node.js
-      #     command: |
-      #       curl -sL https://deb.nodesource.com/setup_13.x | bash -
-      #       apt-get update && apt-get install -y nodejs
       - run:
           name: Install serverless CLI
           command: sudo npm i -g serverless
@@ -93,23 +88,23 @@ workflows:
           filters:
             branches:
               ignore: master
-  # deploy-production:
-  #   jobs:
-  #     - permit-production-release:
-  #         type: approval
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - assume-role-production:
-  #         context: api-assume-role-production-context
-  #         requires:
-  #           - permit-production-release
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - deploy-to-production:
-  #         requires:
-  #           - assume-role-production
-  #         filters:
-  #           branches:
-  #             only: master
+  deploy-production:
+    jobs:
+      - permit-production-release:
+          type: approval
+          filters:
+            branches:
+              only: master
+      - assume-role-production:
+          context: api-assume-role-production-context
+          requires:
+            - permit-production-release
+          filters:
+            branches:
+              only: master
+      - deploy-to-production:
+          requires:
+            - assume-role-production
+          filters:
+            branches:
+              only: master
