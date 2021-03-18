@@ -45,27 +45,14 @@ commands:
       - checkout
       - setup_remote_docker
       - run:
-          name: Install Node.js
-          command: |
-            curl -sL https://deb.nodesource.com/setup_13.x | bash -
-            apt-get update && apt-get install -y nodejs
-      - run:
           name: Install serverless CLI
-          command: npm i -g serverless
+          command: sudo npm i -g serverless
       - run:
           name: Deploy lambda
           command: |
-            cd ./housing-needs-collab-casework-api/
+            npm install --only=production
             sls deploy --stage <<parameters.stage>> --conceal
 jobs:
-  build:
-    executor: docker-python
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: build
-          command: npm install
   assume-role-development:
     executor: docker-python
     steps:
@@ -90,14 +77,8 @@ jobs:
 workflows:
   deploy-development:
     jobs:
-      - build:
-        filters:
-          branches:
-            ignore: master
       - assume-role-development:
           context: api-assume-role-development-context
-          requires:
-            - build-and-test
           filters:
             branches:
               ignore: master
@@ -109,10 +90,6 @@ workflows:
               ignore: master
   deploy-production:
     jobs:
-      - build:
-          filters:
-            branches:
-              only: master
       - permit-production-release:
           type: approval
           filters:
