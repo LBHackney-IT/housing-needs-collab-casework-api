@@ -81,14 +81,14 @@ jobs:
 workflows:
   deploy-development:
     jobs:
-      - assume-role-development:
-          context: api-assume-role-development-context
-          filters:
-            branches:
-              ignore: master
+      # - assume-role-development:
+      #     context: api-assume-role-development-context
+      #     filters:
+      #       branches:
+      #         ignore: master
       - deploy-to-development:
-          requires:
-            - assume-role-development
+          # requires:
+          #   - assume-role-development
           filters:
             branches:
               ignore: master
