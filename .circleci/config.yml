@@ -48,9 +48,12 @@ commands:
       - node/install:          
           node-version: '16.15'
       - run: node --version
+      - run: 
+          name: install npm
+          command: sudo npm i -g npm@latest && npm ci
       - run:
           name: Install serverless CLI
-          command: sudo npm i -g -serverless
+          command: npm i serverless
       - run:
           name: Deploy lambda
           command: |
