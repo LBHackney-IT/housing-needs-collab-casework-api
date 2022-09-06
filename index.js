@@ -48,8 +48,8 @@ app.use(function(req, res, next) {
       // pass along the username and email
       const decoded = jwt.decode(token);
 
-      console.log(`---------- decoded credentials are ${JSON.stringify(decoded)} --------`)
-      
+      //console.log(`---------- decoded credentials are ${JSON.stringify(decoded)} --------`)
+
       res.locals.user = {
         username: decoded.name,
         email: decoded.email
