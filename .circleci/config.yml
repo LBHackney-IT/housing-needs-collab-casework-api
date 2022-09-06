@@ -4,6 +4,7 @@ orbs:
   aws-ecr: circleci/aws-ecr@3.0.0
   aws-cli: circleci/aws-cli@0.1.9
   aws_assume_role: lbh-hackit/aws_assume_role@0.1.0
+  node: circleci/node@5.0.2
 
 executors:
   docker-python:
@@ -11,7 +12,7 @@ executors:
       - image: circleci/python:3.7
   docker-node:
     docker:
-      - image: circleci/node@5.0.2
+      - image: cimg/node:16.15.1-browsers
 
 references:
   workspace_root: &workspace_root "~"
