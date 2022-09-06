@@ -47,8 +47,7 @@ commands:
       - setup_remote_docker
       - node/install:          
           node-version: '16.15'
-      - run: node --version
-      - run: npm -v      
+      - run: node --version        
       - run:
           name: Install serverless CLIs
           command: npm i -g serverless
