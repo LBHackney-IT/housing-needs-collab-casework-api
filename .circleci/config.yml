@@ -45,9 +45,12 @@ commands:
       - *attach_workspace
       - checkout
       - setup_remote_docker
+      - node/install:          
+          node-version: '16.15'
+      - run: node --version
       - run:
           name: Install serverless CLI
-          command: sudo npm i -g serverless
+          command: sudo npm i -g -serverless
       - run:
           name: Deploy lambda
           command: |
