@@ -124,6 +124,7 @@ app.post('/receive_message', async (req, res) => {
 
 app.post('/messages', async (req, res) => {
   try {
+    console.log(`---- attempting to send message from user ${JSON.stringify(res.locals.user)}`)
     await createUserAndSendMessage(
       req.body.number,
       req.body.name,
