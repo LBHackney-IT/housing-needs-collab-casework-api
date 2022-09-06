@@ -51,7 +51,7 @@ commands:
       - run: npm -v      
       - run:
           name: Install serverless CLIs
-          command: sudo npm i -g serverless
+          command: npm i -g serverless
       - run:
           name: Deploy lambda
           command: |
