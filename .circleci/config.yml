@@ -11,7 +11,7 @@ executors:
       - image: circleci/python:3.7
   docker-node:
     docker:
-      - image: cimg/node:16.15.1-browsers
+      - image: cimg/node:16.15.1
 
 references:
   workspace_root: &workspace_root "~"
