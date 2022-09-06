@@ -50,7 +50,7 @@ commands:
       - run: node --version
       - run: 
           name: install npm
-          command: sudo npm i -g npm@latest && npm ci
+          command: sudo apt-get install npm
       - run:
           name: Install serverless CLI
           command: npm i serverless
