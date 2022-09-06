@@ -43,6 +43,8 @@ app.use(function(req, res, next) {
         req.query.apikey || req.headers.authorization.replace('Bearer ', '');
       jwt.verify(token, process.env.JWT_SECRET);
 
+      //need to put logging in here
+
       // pass along the username and email
       const decoded = jwt.decode(token);
       res.locals.user = {
