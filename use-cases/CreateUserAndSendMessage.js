@@ -24,6 +24,7 @@ module.exports = (options, useCases) => {
       contact = await dbGateway.getContactByNumber(number);
       console.log(`got contact.`)
     }catch(err){
+      console.log(`------ error getting contact. Full error is ${JSON.stringify(err)}`)
       if(err.code === 0){
         console.log(`attempting to create contact...`)
         contact = await useCases.createContact(name, number);
