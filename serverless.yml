@@ -3,8 +3,7 @@ service: housing-collab-api
 provider:
  name: aws
  runtime: nodejs16.x
- memorySize: 128
- timeout: 30
+ memorySize: 128 
  vpc: ${self:custom.vpc.${opt:stage}}
  stage: ${opt:stage}
  region: eu-west-2
