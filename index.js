@@ -57,6 +57,7 @@ app.use(function(req, res, next) {
     }
     next();
   } catch (err) {
+    console.log(`full error is ${JSON.stringify(err)}`)
     console.log('Invalid JWT Token');
     res.sendStatus(403);
   }
