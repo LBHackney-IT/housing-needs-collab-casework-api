@@ -19,31 +19,25 @@ module.exports = (options, useCases) => {
     if(!number) throw new Error("Bad mobile number");
 
     // look up or create the contact
-    try{
-      console.log(`attempting to get contact...`)
-      contact = await dbGateway.getContactByNumber(number);
-      console.log(`got contact.`)
+    try{      
+      contact = await dbGateway.getContactByNumber(number);      
     }catch(err){
       console.log(`error getting contact. Full error is ${JSON.stringify}`)
-      if(err.code === 0){
-        console.log(`attempting to create contact...`)
+      if(err.code === 0){        
         contact = await useCases.createContact(name, number);
-        console.log(`created contact ${JSON.stringify(contact)}`)
+       
       }
     }
 
     // look up or create the system user
     console.log(`attempting to get system user...`)
     let systemUser = await dbGateway.getUserByUsername(user.username);
-    if (!systemUser) {
-      console.log(`no system user found. creating...`)
+    if (!systemUser) {      
       systemUser = await dbGateway.createUser(user.username, user.email);
-      console.log(`created system user ${JSON.stringify(systemUser)}`)
+      
     }
 
-    const namedMessage = `${message.trim()}\n- ${user.username} @ Hackney`;
-
-    console.log(`attempting to send message... ${JSON.stringify(namedMessage)}`)
+    const namedMessage = `${message.trim()}\n- ${user.username} @ Hackney`;    
 
     if (await smsGateway.sendMessage(contact.number, namedMessage)) {
       await dbGateway.saveMessage(

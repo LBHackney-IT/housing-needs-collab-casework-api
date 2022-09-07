@@ -56,8 +56,7 @@ class PostgresGateway {
     return processContact(result);
   }
 
-  async getContactByNumber(number) {
-    console.log(`in postgres gateway. getting contact for number ${number}`)
+  async getContactByNumber(number) {    
     const query = `SELECT contacts.*
     FROM contacts
     WHERE contacts.number = $(number);`;   
