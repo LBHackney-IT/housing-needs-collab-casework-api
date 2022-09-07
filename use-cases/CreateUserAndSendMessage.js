@@ -17,20 +17,22 @@ module.exports = (options, useCases) => {
     let contact;
     number = normaliseNumber(number);
     if(!number) throw new Error("Bad mobile number");
-
     // look up or create the contact
-    try{
-      console.log(`attempting to get contact...`)
-      contact = await dbGateway.getContactByNumber(number);
-      console.log(`got contact.`)
-    }catch(err){
-      console.log(`------ error getting contact. Full error is ${JSON.stringify(err)}`)
-      if(err.code === 0){
-        console.log(`attempting to create contact...`)
-        contact = await useCases.createContact(name, number);
+    // try{
+    //   console.log(`attempting to get contact...`)
+    //   contact = await dbGateway.getContactByNumber(number);
+    //   console.log(`got contact.`)
+    // }catch(err){
+    //   console.log(`------ error getting contact. Full error is ${JSON.stringify(err)}`)
+    //   if(err.code === 0){
+    //     console.log(`attempting to create contact...`)
+    //     contact = await useCases.createContact(name, number);
+    //     console.log(`created contact ${JSON.stringify(contact)}`)
+    //   }
+    // }
+
+    contact = await useCases.createContact(name, number);
         console.log(`created contact ${JSON.stringify(contact)}`)
-      }
-    }
 
     // look up or create the system user
     console.log(`attempting to get system user...`)
