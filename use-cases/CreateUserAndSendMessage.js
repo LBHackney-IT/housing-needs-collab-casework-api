@@ -24,11 +24,10 @@ module.exports = (options, useCases) => {
     }catch(err){
       console.log(`error getting contact. Full error is ${JSON.stringify}`)
       if(err.code === 0){        
-        contact = await useCases.createContact(name, number);
-       
+        contact = await useCases.createContact(name, number);       
       }
     }
-
+    
     // look up or create the system user
     console.log(`attempting to get system user...`)
     let systemUser = await dbGateway.getUserByUsername(user.username);
