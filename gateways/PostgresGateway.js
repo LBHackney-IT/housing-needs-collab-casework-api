@@ -60,8 +60,17 @@ class PostgresGateway {
     console.log(`in postgres gateway. getting contact for number ${number}`)
     const query = `SELECT contacts.*
     FROM contacts
-    WHERE contacts.number = $(number);`;    
-    const result = await pg.one(query, { number });
+    WHERE contacts.number = $(number);`;   
+    let result; 
+    try {
+      result = await pg.one(query, { number });
+    } catch (e) {
+      console.log(` ------- error making query to gateway: ${JSON.stringify(e)}`)
+      return;
+    }
+    
+
+
     console.log(`result from db query is ${JSON.stringify(result)}`)
     return result;
   }
