@@ -57,11 +57,12 @@ class PostgresGateway {
   }
 
   async getContactByNumber(number) {
+    console.log(`in postgres gateway. getting contact for number ${number}`)
     const query = `SELECT contacts.*
     FROM contacts
-    WHERE contacts.number = $(number);`;
-
+    WHERE contacts.number = $(number);`;    
     const result = await pg.one(query, { number });
+    console.log(`result from db query is ${JSON.stringify(result)}`)
     return result;
   }
 
