@@ -46,9 +46,7 @@ app.use(function(req, res, next) {
       //need to put logging in here
 
       // pass along the username and email
-      const decoded = jwt.decode(token);
-
-      //console.log(`---------- decoded credentials are ${JSON.stringify(decoded)} --------`)
+      const decoded = jwt.decode(token);      
 
       res.locals.user = {
         username: decoded.name,
@@ -89,7 +87,7 @@ app.get('/contacts/:id', async (req, res) => {
 });
 
 app.get('/contacts', async (req, res) => {
-  console.log('getting contacts');
+  //console.log('getting contacts');
   try {
     let contacts = await listContacts();
     res.send(contacts);
