@@ -18,6 +18,7 @@ class ClickSendGateway {
 
     try {
       const res = await smsApi.smsSendPost(smsCollection);
+      console.log(`------ body response from SMS gateway: ${JSON.stringify(res.body)}`)
       return res.body.http_code === 200;
     } catch (err) {
       console.error(err);
