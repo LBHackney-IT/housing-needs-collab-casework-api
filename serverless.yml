@@ -1,18 +1,17 @@
 service: housing-collab-api
 
 provider:
- name: aws
- runtime: nodejs16.x
- memorySize: 128 
- vpc: ${self:custom.vpc.${opt:stage}}
- stage: ${opt:stage}
- region: eu-west-2
+  name: aws
+  runtime: nodejs16.x
+  vpc: ${self:custom.vpc.${opt:stage}}
+  stage: ${opt:stage}
+  region: eu-west-2
 
 functions:
- api:
-   handler: index.universal
-   role: lambdaExecutionRole
-   environment:
+  api:
+    handler: index.universal
+    role: lambdaExecutionRole
+    environment:
       CLICKSEND_API_KEY: ${ssm:/housing-collab-api/${self:provider.stage}/clicksend-api-key}
       CLICKSEND_USERNAME: ${ssm:/housing-collab-api/${self:provider.stage}/clicksend-username}
       DATABASE_URL: ${ssm:/housing-collab-api/${self:provider.stage}/database-url}
@@ -22,13 +21,13 @@ functions:
       SMS_NUMBER: ${ssm:/housing-collab-api/${self:provider.stage}/sms-number}
       UI_URL: ${ssm:/housing-collab-api/${self:provider.stage}/ui-url}
 
-   events:
-     - http:
-        path: /
-        method: ANY
-     - http:
-        path: /{proxy+}
-        method: ANY
+    events:
+      - http:
+          path: /
+          method: ANY
+      - http:
+          path: /{proxy+}
+          method: ANY
 
 resources:
   Resources:
@@ -64,23 +63,23 @@ resources:
                           - Ref: 'AWS::Region'
                           - Ref: 'AWS::AccountId'
                           - 'log-group:/aws/lambda/*:*:*'
-                - Effect: "Allow"
+                - Effect: 'Allow'
                   Action:
-                    - "s3:PutObject"
-                    - "s3:GetObject"
+                    - 's3:PutObject'
+                    - 's3:GetObject'
                   Resource:
                     Fn::Join:
-                      - ""
-                      - - "arn:aws:s3:::"
-                        - "Ref": "ServerlessDeploymentBucket"
+                      - ''
+                      - - 'arn:aws:s3:::'
+                        - 'Ref': 'ServerlessDeploymentBucket'
           - PolicyName: lambdaInvocation
             PolicyDocument:
               Version: '2012-10-17'
               Statement:
                 - Effect: Allow
                   Action:
-                    - "lambda:InvokeFunction"
-                  Resource: "*"
+                    - 'lambda:InvokeFunction'
+                  Resource: '*'
 
 custom:
   vpc:
