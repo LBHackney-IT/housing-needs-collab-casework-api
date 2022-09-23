@@ -16,10 +16,19 @@ class ClickSendGateway {
     const smsCollection = new ClickSend.SmsMessageCollection();
     smsCollection.messages = [sms];
 
+    const insufficientCredit = body => {
+      body.messages.forEach(message => {
+        if (message.status === 'INSUFFICIENT_CREDIT') return true;
+      });
+      return false;
+    };
+
     try {
       const res = await smsApi.smsSendPost(smsCollection);
-      console.log(`------ body response from SMS gateway: ${JSON.stringify(res.body)}`)
-      return res.body.http_code === 200;
+      console.log(
+        `------ body response from SMS gateway: ${JSON.stringify(res.body)}`
+      );
+      return res.body.http_code === 200 && !insufficientCredit(res.body);
     } catch (err) {
       console.error(err);
     }
